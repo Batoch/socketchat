@@ -3,22 +3,13 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const firebase = require("firebase");
+var config = require('./config');
 
 const http = require('http');
 var server = http.createServer(app);
 const io = require('socket.io')(server);
 
-var firebaseConfig = {
-    apiKey: "AIzaSyA1QHv3v6D1tFCFO3NxSh2so1xC8t--Lwg",
-    authDomain: "chat-6c8d4.firebaseapp.com",
-    databaseURL: "https://chat-6c8d4-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "chat-6c8d4",
-    storageBucket: "chat-6c8d4.appspot.com",
-    messagingSenderId: "1746856943",
-    appId: "1:1746856943:web:0fa4e7666f0d1fc8b3241a",
-    measurementId: "G-TPR8NZZMHT"
-};
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(config.firebaseConfig)
 let database = firebase.database()
 var newmsgRef = database.ref('messages');
 app.use(bodyParser.urlencoded({ extended: false }));
