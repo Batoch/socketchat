@@ -1,6 +1,7 @@
 var socket = io();
 socket.on('message', addMessage)
 socket.on('init', removeall)
+var id = 0;
 
 $(() => {
     $("#send").click(()=>{
@@ -9,6 +10,7 @@ $(() => {
 			message:$("#message").val()})
 	})
 	fetchMessages()
+
 })
 
 function removeall(){
@@ -17,17 +19,14 @@ function removeall(){
 	}
 
 function addMessage(message){
-	var element = document.getElementById("messages");
 	$("#messages").prepend(`
-		<div class="message" style="border: 1px solid silver;height:60px;">
-		<h4> Nom: ${message.data.nom} </h4>
-		<p> Message: ${message.data.message} </p>
+		<div class="media text-muted pt-3 " id="messagechat" style="height:60px;">
+			<h4 class="media-body pb-3 mb-0 lh-125 border-bottom border-gray animated fade-in-text"> ${message.data.nom} : ${message.data.message} </h4>
 		</div>`)
 	}
 
 function fetchMessages(){
 	socket.emit('fetchmessages');
-	console.log("fetchmessages");
  }
 
 function sendMessage(message){

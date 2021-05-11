@@ -1,15 +1,15 @@
 <div class="container">
 	<br>
-	<div class="jumbotron">
-		<h1 class="display-4">Send Message</h1>
-			<br>
-			<input id = "name" class="form-control" placeholder="Name">
-				<br>
-				<input id = "message" class="form-control" placeholder="Your Message Here"></input>
-				<br>
-				<button id="send" class="btn btn-success">Send</button>
+	<div class="jumbotron jumbotron-fluid box-shadow" background-color="#e9ecef">
+		<div style="text-align: center;"><h1 class="display-4">Send Message</h1></div>
+		<br>
+		<input id="name" class="form-control" placeholder="Name">
+		<br>
+		<input id="message" class="form-control" placeholder="Your Message Here"/>
+		<br>
+		<button id="send" class="btn btn-success">Send</button>
 	</div>
-	<div id="messages"></div>
+	<div id="messages" class="my-3 p-3 bg-white rounded box-shadow"></div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
