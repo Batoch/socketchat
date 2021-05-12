@@ -11,7 +11,6 @@ services:
       AUTH: "no"
     ports:
       - 27017:27017
-    command: sh -c "mongod --repair"
     volumes:
       - mongodb:/data/db
   server:
