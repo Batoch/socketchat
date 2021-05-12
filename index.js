@@ -3,10 +3,20 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const firebase = require("firebase");
-var config = require('./config');
+const fs = require('fs');
+const yaml = require('js-yaml')
+const config = require('./config');
+let socketmessage
+
+try {
+	let fileContents = fs.readFileSync('./socketmsg.yaml', 'utf8');
+	socketmessage = yaml.load(fileContents);
+} catch (e) {
+	console.log(e);
+}
 
 const http = require('http');
-var server = http.createServer(app);
+const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 firebase.initializeApp(config.firebaseConfig)
@@ -27,11 +37,11 @@ server.listen(3000, () => {
 
 io.on('connection', (socket) =>{
 	console.log('a user is connected')
-	socket.on('fetchmessages', () =>{
+	socket.on(socketmessage.fetchmessages, () =>{
 		console.log("Request received.");
 		initmessages();
 	});
-	socket.on('sendmessage', (msg) =>{
+	socket.on(socketmessage.sendmessage, (msg) =>{
 		console.log("New message.");
 		getmessage(msg);
 	});
@@ -40,7 +50,7 @@ io.on('connection', (socket) =>{
 function initmessages(){
 	console.log("startget")
 	function getdb(valeur){
-		var messages = [];
+		const messages = [];
 		io.emit('init');
 		if(valeur != null){
 			Object.entries(valeur).forEach(([key, value]) => {
@@ -61,19 +71,19 @@ function initmessages(){
 }
 
 function getmessage(msg){
-	var {name, message} = msg;
+	let {name, message} = msg;
 
 	// HTML injection prevention
 	name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 	// Send to db
-	var date = Date.now();
-	var newmsgRef = database.ref('messages').push();
+	const date = Date.now();
+	const newmsgRef = database.ref('messages').push();
 
-	nom = name
-	data = {nom, message};
-	dict = {date, data}
+	let nom = name
+	let data = {nom, message};
+	let dict = {date, data}
 
 	io.emit('message', dict);
 
