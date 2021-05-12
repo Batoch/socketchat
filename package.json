@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e js,ejs"
+    "start": "nodemon -e js,ejs,css"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +18,13 @@
     "firebase": "^8.5.0",
     "http": "*",
     "jquery": "^3.6.0",
+    "js-yaml": "^4.1.0",
+    "mongoose": "^5.12.8",
     "socket.io": "^4.0.2",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
+    "mongodb": "^3.6.6",
     "nodemon": "^2.0.7"
   }
 }

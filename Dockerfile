@@ -11,7 +11,6 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-ADD config.js /usr/src/app/config.js
 
 EXPOSE 3000
 
