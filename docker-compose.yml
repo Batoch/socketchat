@@ -1,13 +1,14 @@
 version: "3.4"
 services:
-  mongo-db:
+  mongo:
     image: mongo
     container_name: mongo_container
-    hostname: mongodb
+    hostname: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoadmin
       MONGO_INITDB_ROOT_PASSWORD: secret
+      AUTH: no
     ports:
       - 27017:27017
     volumes:
