@@ -4,10 +4,20 @@ socket.on('init', removeall)
 
 $(() => {
     $("#send").click(()=>{
-    	if ($("#name").val() !== "" && $("#message").val() !== ""){
+    	let name = $("#name").val()
+		let message = $("#message").val()
+    	if (name !== "" && message !== ""){
+
+			if(name.length > 150){
+				name = name.substring(0, 150)
+			}
+			if(message.length > 150){
+				message = message.substring(0, 150)
+			}
+
 			sendMessage({
-				name: $("#name").val(),
-				message:$("#message").val()
+				name: name,
+				message: message
 			})
 		}
     	else {

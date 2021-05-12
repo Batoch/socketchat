@@ -73,6 +73,13 @@ function getmessage(msg) {
     name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+    if(name.length > 150){
+        name = name.substring(0, 150)
+    }
+    if(message.length > 150){
+        message = message.substring(0, 150)
+    }
+
     io.emit('message', {name, message});
 
     // Send to db
