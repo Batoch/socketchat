@@ -21,7 +21,7 @@ services:
         buildno: 1
     container_name: node_server_container
     depends_on:
-      - mongo-db
+      - mongo
     environment:
       MYSQL_HOST_IP: mongodb
     ports:
@@ -29,7 +29,7 @@ services:
     volumes:
       - .:/app
     links:
-      - mongo-db
+      - mongo
     command: npm start
 volumes:
   mongodb:
