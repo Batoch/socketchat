@@ -1,0 +1,35 @@
+version: "3.4"
+services:
+  mongo-db:
+    image: mongo
+    container_name: mongo_container
+    hostname: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+    container_name: node_server_container
+    depends_on:
+      - mongo-db
+    environment:
+      <<: *common-variables
+      MYSQL_HOST_IP: mongodb
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    links:
+      - mongo-db
+    command: npm start
+volumes:
+  mongodb:

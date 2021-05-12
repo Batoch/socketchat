@@ -9,7 +9,7 @@ let socketmessage
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const ObjectID = mongo.ObjectID;
-const uri = "mongodb+srv://baba:pfVAUNP8L4jVUNvW@cluster0.jvusn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb://mongo:27017/docker-node-mongo";
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 var db
 
