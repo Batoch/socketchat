@@ -22,7 +22,6 @@ services:
     depends_on:
       - mongo-db
     environment:
-      <<: *common-variables
       MYSQL_HOST_IP: mongodb
     ports:
       - 3000:3000
