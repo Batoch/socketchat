@@ -1,7 +1,8 @@
 var socket = io();
 socket.on('message', addMessage)
 socket.on('init', removeall)
-var id = 0;
+
+
 
 $(() => {
     $("#send").click(()=>{
@@ -10,7 +11,16 @@ $(() => {
 			message:$("#message").val()})
 	})
 	fetchMessages()
-
+	var input = document.getElementById("all");
+	input.addEventListener("keyup", function(event) {
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			console.log("oui")
+			// Trigger the button element with a click
+			document.getElementById("send").click();
+		}
+	});
 })
 
 function removeall(){
