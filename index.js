@@ -4,14 +4,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const fs = require('fs');
 const yaml = require('js-yaml')
-let socketmessage
-
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const ObjectID = mongo.ObjectID;
 const uri = "mongodb://mongo:27017/docker-node-mongo";
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-var db
+let db;
+let socketmessage
 
 client.connect(err => {
     db = client.db("messages");
@@ -40,7 +39,6 @@ server.listen(3000, () => {
     console.log("server started on port 3000");
 });
 
-
 io.on('connection', (socket) => {
     console.log('a user is connected')
     socket.on(socketmessage.fetchmessages, () => {
@@ -58,8 +56,8 @@ function initmessages() {
     db.collection("messages").find().toArray(function (error, results) {
         if (error) throw error;
         results.forEach(function (i, obj) {
-            name = i.name
-            message = i.message
+            let name = i.name
+            let message = i.message
             io.emit('message', {name, message});
         });
     });
@@ -72,9 +70,9 @@ function getmessage(msg) {
     name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    // Send to db
     io.emit('message', {name, message});
 
+    // Send to db
     let messagedb = {_id: new ObjectID(), name: name, message: message};
     db.collection('messages').insertOne(messagedb)
 }
