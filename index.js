@@ -62,6 +62,11 @@ function initmessages(){
 
 function getmessage(msg){
 	var {name, message} = msg;
+
+	// HTML injection prevention
+	name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
 	// Send to db
 	var date = Date.now();
 	var newmsgRef = database.ref('messages').push();
