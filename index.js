@@ -65,6 +65,9 @@ function initmessages() {
 
 function getmessage(msg) {
     let {name, message} = msg;
+    if(name === "" || message === ""){
+        return;
+    }
 
     // HTML injection prevention
     name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
