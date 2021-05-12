@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo
+    image: mangoraft/mongodb-arm
     container_name: mongo_container
     hostname: mongo
     restart: always
