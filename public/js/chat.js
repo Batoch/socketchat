@@ -1,22 +1,26 @@
-var socket = io();
+const socket = io();
+
 socket.on('message', addMessage)
 socket.on('init', removeall)
 
-
-
 $(() => {
     $("#send").click(()=>{
-		sendMessage({
-			name: $("#name").val(), 
-			message:$("#message").val()})
+    	if ($("#name").val() !== "" && $("#message").val() !== ""){
+			sendMessage({
+				name: $("#name").val(),
+				message:$("#message").val()
+			})
+		}
+    	else {
+			$('.toast').toast('show');
+		}
 	})
 	fetchMessages()
-	var input = document.getElementById("all");
+	const input = document.getElementById("all");
 	input.addEventListener("keyup", function(event) {
 		// Number 13 is the "Enter" key on the keyboard
-		if (event.keyCode === 13) {
+		if (event.key === "Enter") {
 			event.preventDefault();
-			console.log("oui")
 			// Trigger the button element with a click
 			document.getElementById("send").click();
 		}
@@ -24,8 +28,7 @@ $(() => {
 })
 
 function removeall(){
-	var element = document.getElementById("messages");
-	element.innerHTML="";
+	document.getElementById("messages").innerHTML="";
 	}
 
 function addMessage(message){
@@ -36,9 +39,9 @@ function addMessage(message){
 	}
 
 function fetchMessages(){
-	socket.emit('fetchmessages');
+	socket.emit("fetchmessages");
  }
 
 function sendMessage(message){
-	socket.emit('sendmessage', message);
+	socket.emit("sendmessage", message);
  }
