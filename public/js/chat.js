@@ -1,5 +1,4 @@
 const socket = io();
-
 socket.on('message', addMessage)
 socket.on('init', removeall)
 
@@ -18,10 +17,8 @@ $(() => {
 	fetchMessages()
 	const input = document.getElementById("all");
 	input.addEventListener("keyup", function(event) {
-		// Number 13 is the "Enter" key on the keyboard
 		if (event.key === "Enter") {
 			event.preventDefault();
-			// Trigger the button element with a click
 			document.getElementById("send").click();
 		}
 	});
