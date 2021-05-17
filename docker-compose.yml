@@ -16,11 +16,7 @@ services:
     hostname: server
     networks:
       - net
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        buildno: 1
+    image: batoch/chatserver
     container_name: node_server_container
     depends_on:
       - mongo
