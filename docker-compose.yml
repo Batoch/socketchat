@@ -33,6 +33,7 @@ services:
     command: npm start
   reverse-proxy:
     image: nginx
+    restart: 'unless-stopped'
     networks:
       - net
     volumes:
