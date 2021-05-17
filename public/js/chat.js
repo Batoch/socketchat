@@ -1,14 +1,23 @@
 const socket = io();
-
 socket.on('message', addMessage)
 socket.on('init', removeall)
 
 $(() => {
     $("#send").click(()=>{
-    	if ($("#name").val() !== "" && $("#message").val() !== ""){
+    	let name = $("#name").val()
+		let message = $("#message").val()
+    	if (name !== "" && message !== ""){
+
+			if(name.length > 150){
+				name = name.substring(0, 150)
+			}
+			if(message.length > 150){
+				message = message.substring(0, 150)
+			}
+
 			sendMessage({
-				name: $("#name").val(),
-				message:$("#message").val()
+				name: name,
+				message: message
 			})
 		}
     	else {
@@ -18,10 +27,8 @@ $(() => {
 	fetchMessages()
 	const input = document.getElementById("all");
 	input.addEventListener("keyup", function(event) {
-		// Number 13 is the "Enter" key on the keyboard
 		if (event.key === "Enter") {
 			event.preventDefault();
-			// Trigger the button element with a click
 			document.getElementById("send").click();
 		}
 	});
