@@ -25,7 +25,7 @@ docker-compose -f docker-compose.yml -f docker-compose.arm.yml up -d
 It create 3 dockers:
 
 - mongo: A mongo database to stock chat messages.
-- server: the core [node.js](nodejs.org) server.
+- server: the core [node.js](https://www.nodejs.org) server.
 - reverse-proxy: A nginx reverse-proxy to enable https.
 
 ### Using Kubernetes
