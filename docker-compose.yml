@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mongo:
-    image: mongodb
+    image: mongo
     networks:
       - net
     container_name: mongo_container
