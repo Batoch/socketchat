@@ -5,3 +5,5 @@ services:
       dockerfile: Dockerfile
       args:
         buildno: 1
+    volumes:
+      - .:/app

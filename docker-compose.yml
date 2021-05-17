@@ -2,44 +2,41 @@ version: "3.4"
 services:
   mongo:
     image: mongo
-    networks:
-      - net
     hostname: mongo
     restart: always
+    container_name: mongo_db_container
     environment:
       AUTH: "no"
-    ports:
-      - 27017:27017
     volumes:
       - mongodb:/data/db
-  server:
-    hostname: server
     networks:
       - net
+  server:
     image: batoch/chatserver
+    hostname: server
+    restart: always
     container_name: node_server_container
     depends_on:
       - mongo
     environment:
       MYSQL_HOST_IP: mongo
-    volumes:
-      - .:/app
-    links:
-      - mongo
     command: npm start
-  reverse-proxy:
-    image: nginx
-    restart: 'unless-stopped'
     networks:
       - net
+  reverse-proxy:
+    image: nginx
+    restart: always
+    container_name: nginx_container
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 #      - /etc/letsencrypt/:/etc/letsencrypt/
+    depends_on:
+      - server
+    networks:
+      - net
     ports:
       - 80:80
 #      - 443:443
-    depends_on:
-      - server
 volumes:
   mongodb:
 networks:

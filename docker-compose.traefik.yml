@@ -4,9 +4,9 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.services.chat.loadbalancer.server.port=3000'
       - 'traefik.http.routers.chat.rule=PathPrefix(`/`)'
-  
   reverse-proxy:
     image: traefik
+    container_name: traefik_container
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
       - './traefik.toml:/traefik.toml'
