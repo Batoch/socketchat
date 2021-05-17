@@ -2,7 +2,7 @@ version: "3.4"
 services:
   mongo:
     image: mongo
-    hostname: mongo
+    hostname: ${MANGOHOSTNAME}
     restart: always
     container_name: mongo_db_container
     environment:
@@ -19,7 +19,7 @@ services:
     depends_on:
       - mongo
     environment:
-      MYSQL_HOST_IP: mongo
+      MYSQL_HOST_IP: ${MANGOHOSTNAME}
     command: npm start
     networks:
       - net
