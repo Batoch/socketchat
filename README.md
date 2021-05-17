@@ -13,13 +13,13 @@ A simple Chat using socket and expressjs
 X86:
 
 ```console
-docker-compose -f docker-compose.yml
+docker-compose -f docker-compose.yml -d
 ```
 
 ARM:
 
 ```console
-docker-compose -f docker-compose.yml -f docker-compose.arm.yml
+docker-compose -f docker-compose.yml -f docker-compose.arm.yml -d
 ```
 
 It create 3 dockers:
