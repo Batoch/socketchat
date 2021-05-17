@@ -2,6 +2,9 @@ services:
   server:
     labels:
       - 'traefik.enable=true'
+      - 'traefik.http.services.chat.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.chat.rule=PathPrefix(`/`)'
+  
   reverse-proxy:
     image: traefik
     volumes:
