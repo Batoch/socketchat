@@ -10,10 +10,16 @@ A simple Chat using socket and expressjs
 
 > **Note:** You need docker-compose
 
-X86:
+To start all 3 containers and having the reverse proxy listening on port 80:
 
 ```console
 docker-compose -f docker-compose.yml -d
+```
+
+Using Traefik instead of nginx:
+
+```console
+docker-compose -f docker-compose.yml -f docker-compose.traefik.yml up -d
 ```
 
 ARM:
@@ -21,6 +27,8 @@ ARM:
 ```console
 docker-compose -f docker-compose.yml -f docker-compose.arm.yml up -d
 ```
+
+> **Note:** You can combine both to use traefik on arm: ``` docker-compose -f docker-compose.yml -f docker-compose.traefik.yml -f docker-compose.arm.yml up -d ```
 
 It create 3 dockers:
 
