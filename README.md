@@ -19,7 +19,7 @@ docker-compose -f docker-compose.yml -d
 ARM:
 
 ```console
-docker-compose -f docker-compose.yml -f docker-compose.arm.yml -d
+docker-compose -f docker-compose.yml -f docker-compose.arm.yml up -d
 ```
 
 It create 3 dockers:
