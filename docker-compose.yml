@@ -1,7 +1,9 @@
 version: "3.4"
 services:
   mongo:
-    image: mangoraft/mongodb-arm
+    image: mongodb
+    networks:
+      - net
     container_name: mongo_container
     hostname: mongo
     restart: always
@@ -14,6 +16,9 @@ services:
     volumes:
       - mongodb:/data/db
   server:
+    hostname: server
+    networks:
+      - net
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,9 +28,7 @@ services:
     depends_on:
       - mongo
     environment:
-      MYSQL_HOST_IP: mongodb
-    ports:
-      - 3000:3000
+      MYSQL_HOST_IP: mongo
     volumes:
       - .:/app
     links:
@@ -33,11 +36,18 @@ services:
     command: npm start
   reverse-proxy:
     image: nginx
+    networks:
+      - net
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+#      - /etc/letsencrypt/:/etc/letsencrypt/
     ports:
       - 80:80
+#      - 443:443
     depends_on:
       - server
 volumes:
   mongodb:
+networks:
+  net:
+    driver: bridge
