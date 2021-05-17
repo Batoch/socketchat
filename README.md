@@ -13,7 +13,7 @@ A simple Chat using socket and expressjs
 To start all 3 containers and having the reverse proxy listening on port 80:
 
 ```console
-docker-compose -f docker-compose.yml -d
+docker-compose up -d
 ```
 
 Using Traefik instead of nginx:
