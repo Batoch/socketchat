@@ -4,8 +4,8 @@
   "description": "A simple chat using nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e js,ejs,css"
+    "dev": "nodemon -e js,ejs,css index.js",
+    "start": "dotenv cross-var node index.js %MANGOHOSTNAME%"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,9 @@
     "js-yaml": "^4.1.0",
     "mongodb": "^3.6.6",
     "socket.io": "^4.0.2",
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "cross-var": "1.1.0",
+    "dotenv-cli": "3.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
