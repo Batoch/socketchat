@@ -1,3 +1,7 @@
+require('dotenv').config();
+const mongohostname = process.env.MONGOHOSTNAME || 'mongo';
+const mongoport = process.env.DBPORT || "27017";
+const serverport = process.env.SERVERPORT || 3000;
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -7,10 +11,12 @@ const yaml = require('js-yaml')
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const ObjectID = mongo.ObjectID;
-const uri = "mongodb://" + process.argv[2] + ":27017/docker-node-mongo";
+const uri = "mongodb://" + mongohostname + ":" + mongoport + "/docker-node-mongo";
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-let db;
-let socketmessage
+const http = require('http');
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+let db, socketmessage;
 
 client.connect(err => {
     db = client.db("messages");
@@ -23,10 +29,6 @@ try {
     console.log(e);
 }
 
-const http = require('http');
-const server = http.createServer(app);
-const io = require('socket.io')(server);
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
@@ -35,18 +37,18 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); /
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
-server.listen(3000, () => {
-    console.log("server started on port 3000");
+server.listen(serverport, () => {
+    console.debug("server started on port " + serverport);
 });
 
 io.on('connection', (socket) => {
-    console.log('a user is connected')
+    console.debug('a user is connected')
     socket.on(socketmessage.fetchmessages, () => {
-        console.log("Request received.");
+        console.debug("Request received.");
         initmessages();
     });
     socket.on(socketmessage.sendmessage, (msg) => {
-        console.log("New message.");
+        console.debug("New message.");
         getmessage(msg);
     });
 })
@@ -58,7 +60,7 @@ function initmessages() {
         results.forEach(function (i, obj) {
             let name = i.name
             let message = i.message
-            io.emit('message', {name, message});
+            io.emit(socketmessage.newmessage, {name, message});
         });
     });
 }
@@ -80,7 +82,7 @@ function getmessage(msg) {
         message = message.substring(0, 150)
     }
 
-    io.emit('message', {name, message});
+    io.emit(socketmessage.newmessage, {name, message});
 
     // Send to db
     let messagedb = {_id: new ObjectID(), name: name, message: message};
