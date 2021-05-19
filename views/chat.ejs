@@ -1,13 +1,16 @@
 <div class="container" id="all">
 	<br>
-	<div class="jumbotron jumbotron-fluid box-shadow" background-color="#e9ecef">
+	<div class="jumbotron box-shadow" background-color="#e9ecef">
 		<div style="text-align: center;"><h1 class="display-4">Otello chat</h1></div>
+<!--		<input id="name" class="form-control" placeholder="Name">-->
 		<br>
-		<input id="name" class="form-control" placeholder="Name">
+		<textarea maxlength='150' id="message" class="form-control" placeholder="Your Message Here"></textarea>
 		<br>
-		<input id="message" class="form-control" placeholder="Your Message Here"/>
-		<br>
-		<button id="send" class="btn btn-success">Send</button>
+		<div>
+			<button id="send" class="btn btn-outline-primary rounded">Send</button>
+			<div class="float-end btn alert-info disabled" id="textsize">0/150</div>
+		</div>
+
 		<div class="toast hide position-fixed top-0 end-0 p-2 rounded" role="alert" aria-live="assertive" aria-atomic="true">
 			<div class="toast-body">
 				Message vide

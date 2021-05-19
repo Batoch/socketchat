@@ -14,6 +14,7 @@ const client = new mongo.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopo
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+const crypto = require('crypto');
 let db, socketmessage;
 
 client.connect(err => {
@@ -39,15 +40,28 @@ server.listen(serverport, () => {
     console.debug("server started on port " + serverport);
 });
 
-io.on('connection', (socket) => {
+io.on('connection', function (socket) {
+    let ip;
+    if(socket.handshake.headers["x-real-ip"] === undefined){
+        ip = socket.request.connection.remoteAddress.split(":")[3]
+    }
+    else{
+        ip = socket.handshake.headers["x-real-ip"]
+    }
     console.debug('a user is connected')
+    // for privacy
+    ip = ip.slice(2,ip.length-2)
+
     socket.on(socketmessage.fetchmessages, () => {
         console.debug("Request received.");
         initmessages();
     });
     socket.on(socketmessage.sendmessage, (msg) => {
         console.debug("New message.");
-        getmessage(msg);
+        getmessage(msg, crypto.createHash('md5').update(ip).digest('hex'));
+    });
+    socket.on(socketmessage.askpseudo, () => {
+        io.emit(socketmessage.pseudo, crypto.createHash('md5').update(ip).digest('hex'));
     });
 })
 
@@ -63,11 +77,12 @@ function initmessages() {
     });
 }
 
-function getmessage(msg) {
-    let {name, message} = msg;
-    if(name === "" || message === ""){
+function getmessage(msg, pseudo) {
+    let {message} = msg;
+    if(message === ""){
         return;
     }
+    let name = pseudo
 
     // HTML injection prevention
     name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -79,7 +94,6 @@ function getmessage(msg) {
     if(message.length > 150){
         message = message.substring(0, 150)
     }
-
     io.emit(socketmessage.newmessage, {name, message});
 
     // Send to db
