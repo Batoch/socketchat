@@ -9,10 +9,8 @@ const bodyParser = require("body-parser");
 const fs = require('fs');
 const yaml = require('js-yaml')
 const mongo = require('mongodb');
-const MongoClient = mongo.MongoClient;
-const ObjectID = mongo.ObjectID;
 const uri = "mongodb://" + mongohostname + ":" + mongoport + "/docker-node-mongo";
-const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const client = new mongo.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
@@ -85,7 +83,7 @@ function getmessage(msg) {
     io.emit(socketmessage.newmessage, {name, message});
 
     // Send to db
-    let messagedb = {_id: new ObjectID(), name: name, message: message};
+    let messagedb = {_id: new mongo.ObjectID(), name: name, message: message};
     db.collection('messages').insertOne(messagedb)
 }
 
