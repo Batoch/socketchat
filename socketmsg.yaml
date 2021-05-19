@@ -1,3 +1,5 @@
 fetchmessages: "fetchmessages"
 sendmessage: "sendmessage"
 newmessage: "message"
+askpseudo: "askpseudo"
+pseudo: "pseudo"
