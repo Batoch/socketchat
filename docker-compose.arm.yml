@@ -1,4 +1,5 @@
 version: "3.4"
 services:
   mongo:
-    image: mangoraft/mongodb-arm
+    #image: mangoraft/mongodb-arm
+    image: webhippie/mongodb
