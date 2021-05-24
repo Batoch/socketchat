@@ -31,6 +31,12 @@ $(() => {
 		const maxLength = target.getAttribute("maxlength");
 		const currentLength = target.value.length;
 
+		if (currentLength <= 0) {
+			document.getElementById("send").classList = "btn btn-outline-primary rounded disabled"
+		}
+		else{
+			document.getElementById("send").classList = "btn btn-outline-primary rounded"
+		}
 		if (currentLength >= maxLength) {
 			document.getElementById("textsize").classList = "float-end btn disabled alert-danger"
 		}
