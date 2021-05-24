@@ -50,7 +50,12 @@ io.on('connection', function (socket) {
     }
     console.debug('a user is connected')
     // for privacy
-    ip = ip.slice(2,ip.length-2)
+    if(ip !== undefined){
+        ip = ip.slice(2,ip.length-2)
+    }
+    else {
+        ip = "undefined"
+    }
 
     socket.on(socketmessage.fetchmessages, () => {
         console.debug("Request received.");
