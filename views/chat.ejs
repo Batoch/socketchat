@@ -1,24 +1,29 @@
 <div class="container" id="all">
-	<br>
-	<div class="jumbotron box-shadow" background-color="#e9ecef">
-		<div style="text-align: center;"><h1 class="display-4">Otello chat</h1></div>
-<!--		<input id="name" class="form-control" placeholder="Name">-->
-		<br>
-		<textarea maxlength='150' id="message" class="form-control" placeholder="Your Message Here"></textarea>
-		<br>
-		<div>
-			<button id="send" class="btn btn-outline-primary rounded disabled" onclick="clicbtn()">Send</button>
-			<div class="float-end btn alert-info disabled" id="textsize">0/150</div>
-		</div>
+    <br>
+    <div class="jumbotron box-shadow" background-color="#e9ecef">
+        <div style="text-align: center;"><h1 class="display-4">Otello chat</h1></div>
+        <!--<input id="name" class="form-control" placeholder="Name">-->
+        <br>
+        <div class="form-group">
+            <label for="message"></label>
+            <textarea maxlength='150' id="message" class="form-control form-control-lg" placeholder="Your Message Here"></textarea>
+        </div>
+        <br>
+        <div>
+            <button id="send" class="btn btn-outline-primary rounded disabled" onclick="clicbtn()">Send</button>
+            <div class="float-end btn alert-info disabled" id="textsize">0/150</div>
+        </div>
 
-		<div class="toast hide position-fixed top-0 end-0 p-2 rounded" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-body">
-				Message vide
-				<button type="button" class="btn-close position-absolute end-0 translate-middle-x" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-		</div>
-	</div>
-	<div id="messages" class="my-3 p-3 bg-white rounded box-shadow"></div>
+        <div class="toast hide position-fixed top-0 end-0 p-2 rounded" role="alert" aria-live="assertive"
+             aria-atomic="true">
+            <div class="toast-body">
+                Message vide
+                <button type="button" class="btn-close position-absolute end-0 translate-middle-x"
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div id="messages" class="my-3 p-3 bg-white rounded box-shadow"></div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
