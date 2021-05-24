@@ -1,14 +1,15 @@
 version: "3.4"
 services:
   mongo:
-    image: mongo
+    image: webhippie/mongodb
     hostname: ${MONGOHOSTNAME:-mongo}
     restart: always
     container_name: mongo_db_container
     environment:
       AUTH: "no"
     volumes:
-      - mongodb:/data/db
+      - mongodb:/var/lib/mongodb
+      - mongobackup:/var/lib/backup
     networks:
       - net
   server:
