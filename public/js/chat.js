@@ -3,21 +3,6 @@ socket.on('message', addMessage)
 socket.on('init', removeall)
 
 $(() => {
-    $("#send").click(()=>{
-		let message = $("#message").val()
-    	if (message !== ""){
-			if(message.length > 150){
-				message = message.substring(0, 150)
-			}
-
-			sendMessage({
-				message: message
-			})
-		}
-    	else {
-			$('.toast').toast('show');
-		}
-	})
 	fetchMessages()
 	const input = document.getElementById("all");
 	input.addEventListener("keyup", function(event) {
@@ -26,32 +11,33 @@ $(() => {
 			document.getElementById("send").click();
 		}
 	});
-	document.querySelector("textarea").addEventListener("input", event => {
-		const target = event.currentTarget;
-		const maxLength = target.getAttribute("maxlength");
-		const currentLength = target.value.length;
-
-		if (currentLength <= 0) {
-			document.getElementById("send").classList = "btn btn-outline-primary rounded disabled"
-		}
-		else{
-			document.getElementById("send").classList = "btn btn-outline-primary rounded"
-		}
-		if (currentLength >= maxLength) {
-			document.getElementById("textsize").classList = "float-end btn disabled alert-danger"
-		}
-		else if (currentLength >= (maxLength - 20)) {
-			document.getElementById("textsize").classList = "float-end btn disabled alert-warning"
-		}
-		else{
-			document.getElementById("textsize").classList = "float-end btn disabled alert-info"
-		}
-		document.getElementById("textsize").innerHTML = currentLength + "/" + maxLength
+	document.querySelector("textarea").addEventListener("input", () => {
+		refreshstatus()
 	});
-
-
-
 })
+
+function refreshstatus(){
+	const target = document.querySelector("textarea")
+	const maxLength = target.getAttribute("maxlength");
+	const currentLength = target.value.length;
+
+	if (currentLength <= 0) {
+		document.getElementById("send").classList = "btn btn-outline-primary rounded disabled"
+	}
+	else{
+		document.getElementById("send").classList = "btn btn-outline-primary rounded"
+	}
+	if (currentLength >= maxLength) {
+		document.getElementById("textsize").classList = "float-end btn disabled alert-danger"
+	}
+	else if (currentLength >= (maxLength - 20)) {
+		document.getElementById("textsize").classList = "float-end btn disabled alert-warning"
+	}
+	else{
+		document.getElementById("textsize").classList = "float-end btn disabled alert-info"
+	}
+	document.getElementById("textsize").innerHTML = currentLength + "/" + maxLength
+}
 
 function removeall(){
 	document.getElementById("messages").innerHTML="";
@@ -71,3 +57,20 @@ function fetchMessages(){
 function sendMessage(message){
 	socket.emit("sendmessage", message);
  }
+
+function clicbtn(){
+	let message = $("#message").val()
+	if (message !== ""){
+		if(message.length > 150){
+			message = message.substring(0, 150)
+		}
+		sendMessage({
+			message: message
+		})
+	}
+	else {
+		$('.toast').toast('show');
+	}
+	$("#message").val('');
+	refreshstatus()
+}
