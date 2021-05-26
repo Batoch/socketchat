@@ -20,7 +20,7 @@
     "http": "*",
     "jquery": "^3.6.0",
     "js-yaml": "^4.1.0",
-    "mongodb": "^3.6.6",
+    "mongodb": "^3.6.8",
     "socket.io": "^4.0.2",
     "websocket": "^1.0.34"
   },
